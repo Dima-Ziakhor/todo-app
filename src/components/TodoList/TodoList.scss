@@ -1,0 +1,58 @@
+@import '../../styles/variables';
+
+.todo-list {
+  overflow-y: auto;
+
+  &__todo {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 1.8rem;
+
+    &:not(:last-child) {
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__title {
+    line-height: 2.2rem;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: $todo-text-color;
+  }
+
+  &__category {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 11.5rem;
+    padding: 0.5rem 0;
+    background-color: $main-color;
+    border: none;
+    border-radius: 0.4rem;
+    line-height: 1.4rem;
+    font-size: 1.2rem;
+    font-weight: 400;
+    color: $primary-white;
+    cursor: pointer;
+    transition: background-color $td $tf;
+
+    &:hover {
+      background-color: $remove-btn-hover;
+    }
+  }
+
+  &__remove-todo {
+    position: absolute;
+    top: 50%;
+    right: 1rem;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
+}

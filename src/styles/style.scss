@@ -1,5 +1,15 @@
 @import './variables';
 
+* {
+  box-sizing: border-box;
+}
+
 html {
+  font-family: $font;
   font-size: $font-size;
+}
+
+body,
+.root {
+  height: 100%;
 }

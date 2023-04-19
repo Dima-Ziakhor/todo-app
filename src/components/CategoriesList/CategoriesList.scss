@@ -1,0 +1,36 @@
+@import '../../styles/variables';
+
+.categories-list {
+  width: 100%;
+  height: 100%;
+  padding: 13rem 1.5rem 2rem 3rem;
+  border-right: 0.1rem solid $list-border-color;
+
+  &__item {
+    padding-bottom: 0.4rem;
+  }
+
+  &__link {
+    display: block;
+    width: 100%;
+    padding: 1rem;
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: $category-text-color;
+    text-decoration: none;
+    transition: color $td $tf;
+
+    &:hover {
+      color: rgba($color: $category-text-color, $alpha: 0.8);
+    }
+
+    &.active {
+      font-weight: 700;
+      color: $main-color;
+
+      &:hover {
+        color: rgba($color: $main-color, $alpha: 0.8);
+      }
+    }
+  }
+}

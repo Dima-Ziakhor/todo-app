@@ -18,7 +18,7 @@ module.exports = {
     'react'
   ],
   rules: {
-    "jsx-quotes": ["error", "prefer-single"],
+    "jsx-quotes": ["error", "prefer-double"],
     "quotes": ["error", "single"],
     "indent": ["error", 2],
     "semi": "off",
