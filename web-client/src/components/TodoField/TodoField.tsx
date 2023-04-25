@@ -11,6 +11,10 @@ export const TodoField = (): JSX.Element => {
       todos.addTodo({
         title: value,
         category: 'something'
+      }).then(() => {
+        console.log('Todo added');
+      }).catch((err) => {
+        console.log(err);
       });
 
       setValue('');

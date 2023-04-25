@@ -6,8 +6,8 @@ import './Todo.scss';
 
 interface Props {
   todo: TodoType
-  onChangeCheck: (id: number) => void
-  onClickRemove: (id: number) => void
+  onChangeCheck: (id: string) => void
+  onClickRemove: (id: string) => void
 }
 
 export const Todo = observer(({ todo, onChangeCheck, onClickRemove }: Props): JSX.Element => {

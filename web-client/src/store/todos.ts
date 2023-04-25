@@ -1,8 +1,9 @@
 import { makeAutoObservable } from 'mobx';
 import type { TodoType } from '../helpers/types';
+import { fetchTodos, postTodo, removeTodo } from '../helpers/requests/todos';
 
 class Todos {
-  todos: TodoType[] = JSON.parse(localStorage.getItem('todos') ?? '[]');
+  todos: TodoType[] = [];
   constructor() {
     makeAutoObservable(this)
   }
@@ -11,32 +12,24 @@ class Todos {
     return this.todos;
   }
 
-  addTodo(todo: Omit<TodoType, 'id' | 'completed'>): void {
-    const tempTodos = [...this.todos];
-
-    const lastId = tempTodos.length
-      ? tempTodos.sort((a, b) => a.id - b.id)[tempTodos.length - 1].id
-      : 0;
-
-    this.todos = [
-      {
-        ...todo,
-        completed: false,
-        id: lastId + 1
-      },
-      ...this.todos
-    ];
-
-    localStorage.setItem('todos', JSON.stringify([...this.todos]))
+  async fetchTodos(): Promise<void> {
+    this.todos = await fetchTodos();
   }
 
-  removeTodo(id: number): void {
+  async addTodo(todo: Omit<TodoType, 'id' | 'completed'>): Promise<void> {
+    this.todos = await postTodo(todo);
+  }
+
+  removeTodo(id: string): void {
     this.todos = this.todos.filter(todo => todo.id !== id);
-
-    localStorage.setItem('todos', JSON.stringify(this.todos));
+    removeTodo(id)
+      .then(() => {})
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
-  updateStatus(id: number): void {
+  updateStatus(id: string): void {
     const todoIndex = this.todos.findIndex(t => t.id === id);
 
     if (todoIndex !== -1) {
@@ -45,7 +38,7 @@ class Todos {
     }
   }
 
-  updateTitle(id: number, title: string): void {
+  updateTitle(id: string, title: string): void {
     const todo = this.todos.find(t => t.id === id);
 
     if (todo) {
