@@ -31,4 +31,12 @@
     font-size: 3.1rem;
     font-weight: 700;
   }
+
+  &__field {
+    padding-bottom: 3.2rem;
+  }
+
+  &__todos {
+    height: calc(100% - 13.7rem);
+  }
 }

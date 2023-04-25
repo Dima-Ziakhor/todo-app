@@ -1,6 +1,7 @@
 import React from 'react';
 import { CategoriesList } from '../CategoriesList';
 import { TodoList } from '../TodoList';
+import { TodoField } from '../TodoField';
 
 import './App.scss';
 
@@ -16,6 +17,10 @@ export const App = (): JSX.Element => {
           <h2 className="app__title">
             All Tasks
           </h2>
+
+          <div className="app__field">
+            <TodoField />
+          </div>
 
           <div className="app__todos">
             <TodoList />

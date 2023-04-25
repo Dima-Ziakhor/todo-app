@@ -1,16 +1,21 @@
 @import '../../styles/variables';
 
-.categories-list {
-  width: 100%;
+.categories {
   height: 100%;
   padding: 13rem 1.5rem 2rem 3rem;
   border-right: 0.1rem solid $list-border-color;
 
-  &__item {
+  &__list {
+    width: 100%;
+    height: calc(100% - 3rem);
+    overflow-y: auto;
+  }
+
+  &__list-item {
     padding-bottom: 0.4rem;
   }
 
-  &__link {
+  &__list-link {
     display: block;
     width: 100%;
     padding: 1rem;
