@@ -23,3 +23,13 @@
     opacity: 1;
   }
 }
+
+@keyframes spin {
+  from {
+    transform: rotate(45deg);
+  }
+
+  to {
+    transform: rotate(765deg);
+  }
+}

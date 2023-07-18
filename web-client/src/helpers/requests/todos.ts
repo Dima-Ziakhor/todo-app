@@ -1,10 +1,18 @@
 import type { TodoType } from '../types';
+import { API_URL_TODOS } from './apiUrls';
 
-const API_URL = 'http://localhost:5001';
+export const fetchTodos = async (userId: number, token: string, categoryId: number | null): Promise<TodoType[]> => {
+  const requestURL = new URL(API_URL_TODOS);
 
-export const fetchTodos = async (): Promise<TodoType[]> => {
+  requestURL.searchParams.set('userId', `${userId}`);
+  requestURL.searchParams.set('categoryId', `${categoryId ?? '0'}`);
+
   try {
-    const request = await fetch(`${API_URL}/todos`);
+    const request = await fetch(requestURL.toString(), {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
     const response = await request.json();
 
     return response;
@@ -15,7 +23,7 @@ export const fetchTodos = async (): Promise<TodoType[]> => {
 
 export const postTodo = async (todo: Omit<TodoType, 'id' | 'completed'>): Promise<TodoType[]> => {
   try {
-    const request = await fetch(`${API_URL}/todos`, {
+    const request = await fetch(API_URL_TODOS, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8'
@@ -30,9 +38,9 @@ export const postTodo = async (todo: Omit<TodoType, 'id' | 'completed'>): Promis
   }
 };
 
-export const removeTodo = async (todoId: string): Promise<void> => {
+export const removeTodo = async (todoId: number): Promise<void> => {
   try {
-    const request = await fetch(`${API_URL}/todos/${todoId}`, {
+    const request = await fetch(`${API_URL_TODOS}${todoId}`, {
       method: 'DELETE'
     });
 
@@ -42,6 +50,25 @@ export const removeTodo = async (todoId: string): Promise<void> => {
       console.log('Something went wrong...');
     }
   } catch (err) {
-    throw new Error('Todo delete failed!');
+    throw new Error('Todo delete failed in request!');
   }
 };
+
+export const updateTodo = async (todo: TodoType, token: string): Promise<TodoType> => {
+  try {
+    const request = await fetch(`${API_URL_TODOS}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        Authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify(todo)
+    });
+
+    const response = await request.json();
+
+    return response;
+  } catch {
+    throw new Error('Todo update failed in request!');
+  }
+}

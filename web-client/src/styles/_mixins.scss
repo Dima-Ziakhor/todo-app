@@ -22,3 +22,30 @@
     box-shadow: 0 0 0.5rem 1rem $input-bg;
   }
 }
+
+@mixin button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem 2.5rem;
+  background-color: $main-color;
+  border: 0.2rem solid transparent;
+  border-radius: 1rem;
+  font-size: 2rem;
+  font-weight: 700;
+  color: $primary-white;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color $td $tf;
+
+  &:active,
+  &:hover {
+    background-color: $remove-btn-hover;
+  }
+}
+
+@mixin activationText {
+  font-size: 2rem;
+  line-height: 2.4rem;
+  color: $primary-black;
+}

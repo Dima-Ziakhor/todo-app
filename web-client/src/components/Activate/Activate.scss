@@ -1,0 +1,9 @@
+@import '../../styles/mixins';
+
+.activate {
+  padding: 3rem 0;
+
+  &__message {
+    @include activationText;
+  }
+}

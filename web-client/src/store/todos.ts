@@ -1,9 +1,10 @@
-import { makeAutoObservable } from 'mobx';
+import { flow, makeAutoObservable } from 'mobx';
 import type { TodoType } from '../helpers/types';
-import { fetchTodos, postTodo, removeTodo } from '../helpers/requests/todos';
+import { fetchTodos, postTodo, removeTodo, updateTodo } from '../helpers/requests/todos';
 
 class Todos {
   todos: TodoType[] = [];
+  isLoading: boolean = false;
   constructor() {
     makeAutoObservable(this)
   }
@@ -12,33 +13,59 @@ class Todos {
     return this.todos;
   }
 
-  async fetchTodos(): Promise<void> {
-    this.todos = await fetchTodos();
-  }
+  fetchTodos = flow(function * (this: Todos, categoryId: number | null) {
+    this.isLoading = true;
 
-  async addTodo(todo: Omit<TodoType, 'id' | 'completed'>): Promise<void> {
-    this.todos = await postTodo(todo);
-  }
+    const userId = localStorage.getItem('userId');
+    const accessToken = localStorage.getItem('accessToken');
 
-  removeTodo(id: string): void {
-    this.todos = this.todos.filter(todo => todo.id !== id);
-    removeTodo(id)
-      .then(() => {})
-      .catch((err) => {
-        console.log(err);
-      });
-  }
-
-  updateStatus(id: string): void {
-    const todoIndex = this.todos.findIndex(t => t.id === id);
-
-    if (todoIndex !== -1) {
-      this.todos[todoIndex].completed = !this.todos[todoIndex].completed;
-      localStorage.setItem('todos', JSON.stringify(this.todos));
+    if (!userId) {
+      throw new Error('User ID not found!');
     }
-  }
 
-  updateTitle(id: string, title: string): void {
+    if (!accessToken) {
+      throw new Error('Access token not found!');
+    }
+
+    this.todos = yield fetchTodos(+userId, accessToken, categoryId);
+    this.isLoading = false;
+  });
+
+  addTodo = flow(function * (this: Todos, todo: Omit<TodoType, 'id' | 'completed'>) {
+    try {
+      const newTodo = yield postTodo(todo);
+      this.todos = yield [newTodo, ...this.todos];
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+  removeTodo = flow(function * (this: Todos, todoId: number) {
+    try {
+      yield removeTodo(todoId);
+      this.todos = this.todos.filter(todo => todo.id !== todoId);
+    } catch (err) {
+      console.log(err);
+    }
+  });
+
+  updateStatus = flow(function * (this: Todos, todoId: number) {
+    const todoIndex = this.todos.findIndex(t => t.id === todoId);
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (todoIndex === -1) {
+      return;
+    }
+
+    if (!accessToken) {
+      throw new Error('Access token not found!');
+    }
+
+    this.todos[todoIndex].completed = !this.todos[todoIndex].completed;
+    yield updateTodo(this.todos[todoIndex], accessToken);
+  })
+
+  updateTitle(id: number, title: string): void {
     const todo = this.todos.find(t => t.id === id);
 
     if (todo) {

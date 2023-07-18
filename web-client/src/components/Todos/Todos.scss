@@ -1,0 +1,51 @@
+@import '../../styles/variables';
+
+.todos {
+  height: calc(100vh - 6rem);
+  background-color: $main-color;
+
+  &__container {
+    height: 100%;
+  }
+
+  &__wrapper {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__content {
+    display: flex;
+    width: 70%;
+    height: 70%;
+    max-width: 98.3rem;
+    max-height: 70.2rem;
+    border-radius: 1rem;
+    background-color: $primary-white;
+  }
+
+  &__categories {
+    padding: 10rem 1rem 3rem 4rem;
+    height: 100%;
+    flex-basis: 25%;
+    max-width: 21rem;
+    border-right: 0.1rem solid $list-border-color;
+  }
+
+  &__todos-wrapper {
+    flex-basis: 75%;
+    padding: 3rem 4.3rem 3rem 5.3rem;
+  }
+
+  &__header {
+    padding-bottom: 3.2rem;
+  }
+
+  &__title {
+    padding-bottom: 2.5rem;
+    font-size: 3.1rem;
+    font-weight: 700;
+    color: $primary-black;
+  }
+}

@@ -19,13 +19,15 @@ module.exports = {
   ],
   rules: {
     'jsx-quotes': ['error', 'prefer-double'],
-    'quotes': ['error', 'single'],
-    'indent': ['error', 2],
-    'semi': 'off',
+    quotes: ['error', 'single'],
+    indent: ['error', 2, { SwitchCase: 1 }],
+    semi: 'off',
     '@typescript-eslint/semi': 'off',
     'no-extra-semi': ['error'],
-    // '@typescript-eslint/strict-boolean-expressions': ['error', { allowNullable: true, ignoreRhs: true }]
-    "@typescript-eslint/strict-boolean-expressions": 0,
-    "@typescript-eslint/space-before-function-paren": "off",
+    '@typescript-eslint/strict-boolean-expressions': 0,
+    '@typescript-eslint/space-before-function-paren': 'off',
+    '@typescript-eslint/no-floating-promises': 'off',
+    '@typescript-eslint/no-misused-promises': 'off',
+    '@typescript-eslint/consistent-type-definitions': 'off'
   }
 }

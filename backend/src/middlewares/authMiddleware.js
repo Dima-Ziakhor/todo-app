@@ -1,0 +1,24 @@
+import { jwtService } from '../services/jwtService.js';
+import { ApiError } from '../exeptions/ApiError.js';
+
+export const authMiddleware = (req, res, next) => {
+  const authHeader = req.headers.authorization;
+
+  if (!authHeader) {
+    throw ApiError.Unauthorized();
+  }
+
+  const [, accessToken] = authHeader.split(' ');
+
+  if (!accessToken) {
+    throw ApiError.Unauthorized();
+  }
+
+  const userData = jwtService.validateAccessToken(accessToken);
+
+  if (!userData) {
+    throw ApiError.Unauthorized();
+  }
+
+  next();
+};

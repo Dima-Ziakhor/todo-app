@@ -1,0 +1,28 @@
+@import '../../styles/variables';
+
+.category-list {
+  height: 100%;
+
+  &__item {
+    padding-bottom: 1.4rem;
+  }
+
+  &__link {
+    padding: 0.5rem;
+    font-family: inherit;
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: $category-text-color;
+    text-decoration: none;
+    transition: color $td $tf, font-weight $td $tf;
+
+    &:hover {
+      color: rgba($color: $category-text-color, $alpha: 0.8);
+    }
+
+    &.active {
+      font-weight: 700;
+      color: $main-color;
+    }
+  }
+}

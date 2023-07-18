@@ -1,0 +1,11 @@
+@import '../../styles/variables';
+
+.require-auth {
+  padding: 2rem;
+
+  &__title {
+    font-size: 2.2rem;
+    font-weight: 500;
+    color: $primary-black;
+  }
+}

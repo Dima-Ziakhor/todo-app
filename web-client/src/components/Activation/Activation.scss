@@ -1,0 +1,9 @@
+@import '../../styles/mixins';
+
+.activation {
+  padding: 3rem 0;
+
+  &__title {
+    @include activationText;
+  }
+}
